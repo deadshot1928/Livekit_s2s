@@ -182,17 +182,8 @@ Source = "https://github.com/deadshot1928/Livekit_s2s"
 path = "livekit-agents/livekit/agents/version.py"
 
 [tool.hatch.build.targets.wheel]
-
-[tool.hatch.build.targets.wheel.force-include]
-"livekit-agents/livekit" = "livekit"
-"livekit-plugins/livekit-plugins-openai/livekit/plugins" = "livekit/plugins"
-"livekit-plugins/livekit-plugins-deepgram/livekit/plugins" = "livekit/plugins"
-"livekit-plugins/livekit-plugins-silero/livekit/plugins" = "livekit/plugins"
-"livekit-plugins/livekit-plugins-cartesia/livekit/plugins" = "livekit/plugins"
-"livekit-plugins/livekit-plugins-turn-detector/livekit/plugins" = "livekit/plugins"
+packages = ["livekit-agents/livekit"]
+include = ["livekit-agents/livekit/agents/resources/*", "livekit-agents/livekit/agents/debug/index.html"]
 
 [tool.hatch.build.targets.sdist]
-include = [
-    "/livekit-agents/livekit",
-    "/livekit-plugins/*/livekit"
-]
+include = ["/livekit-agents/livekit"]
