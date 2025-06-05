@@ -338,6 +338,7 @@ class AgentActivity(RecognitionHooks):
                 )
                 self._rt_session.on("metrics_collected", self._on_metrics_collected)
                 self._rt_session.on("error", self._on_error)
+                self._rt_session.on("response_done", self._on_response_done)
 
                 remove_instructions(self._agent._chat_ctx)
 
@@ -768,6 +769,9 @@ class AgentActivity(RecognitionHooks):
                 "user_input_transcribed",
                 UserInputTranscribedEvent(transcript="", is_final=False),
             )
+
+    def _on_response_done(self, ev) -> None:
+        self._session.emit("response_done",ev,)
 
     def _on_input_audio_transcription_completed(self, ev: llm.InputTranscriptionCompleted) -> None:
         log_event("input_audio_transcription_completed")

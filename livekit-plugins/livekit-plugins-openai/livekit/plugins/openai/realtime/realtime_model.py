@@ -66,6 +66,10 @@ from openai.types.beta.realtime.session import (
 
 from ..log import logger
 
+class rd_event(BaseModel):                              #adding custom_response_done_event
+    type: Literal["response_done"] = "response_done"
+    event: dict
+
 # When a response is created with the OpenAI Realtime API, those events are sent in this order:
 # 1. response.created (contains resp_id)
 # 2. response.output_item.added (contains item_id)
@@ -732,6 +736,7 @@ class RealtimeSession(
                             ResponseOutputItemDoneEvent.construct(**event)
                         )
                     elif event["type"] == "response.done":
+                        self.emit("response_done", rd_event(event=event))        #emmiting event response_done event 
                         self._handle_response_done(ResponseDoneEvent.construct(**event))
                     elif event["type"] == "error":
                         self._handle_error(ErrorEvent.construct(**event))
